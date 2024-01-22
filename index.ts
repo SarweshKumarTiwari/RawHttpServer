@@ -7,10 +7,12 @@ const server = http.createServer((req, res) => {
     res.statusCode=200;
     let body="";
     req.on("data",(chunk)=>{
-      console.log(chunk.toString())
       body+=chunk.toString();
     }).on("end",()=>{
-      res.end("The request text is "+body)
+      res.emit("done")
+    });
+    res.on("done",()=>{
+      res.end("the given data is "+body)
     })
   }
 });
